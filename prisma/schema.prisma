@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Product {
+  id          Int    @id @default(autoincrement())
+  name        String
+  price       Float
+  image       String
+  description String
+  categoryId  Int
+}
+
+model Category {
+  id       Int    @id @default(autoincrement())
+  name     String
+  emoji    String
+  slug     String @unique
+  color    String
+  pale     String
+  gradient String
+}
