@@ -13,6 +13,7 @@ model Product {
   image       String
   description String
   categoryId  Int
+  category    Category @relation(fields: [categoryId], references: [id])
 }
 
 model Category {
@@ -23,4 +24,11 @@ model Category {
   color    String
   pale     String
   gradient String
+  products Product[]
+}
+
+model User {
+  id       Int @id @default(autoincrement())
+  email    String @unique
+  password String
 }
