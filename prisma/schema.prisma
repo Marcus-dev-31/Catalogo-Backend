@@ -10,7 +10,7 @@ model Product {
   id          Int    @id @default(autoincrement())
   name        String
   price       Float
-  image       String
+  images      ProductImage[]
   description String
   categoryId  Int
   category    Category @relation(fields: [categoryId], references: [id])
@@ -25,6 +25,14 @@ model Category {
   pale     String
   gradient String
   products Product[]
+}
+
+model ProductImage {
+  id        Int     @id @default(autoincrement())
+  url       String
+  order     Int     @default(0)
+  productId Int
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model User {
