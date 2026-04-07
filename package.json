@@ -8,6 +8,7 @@
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.3.2",
     "jsonwebtoken": "^9.0.3",
     "multer": "^2.1.1",
     "pg": "^8.20.0",
@@ -25,9 +26,9 @@
     "typescript": "^6.0.2"
   },
   "scripts": {
-  "build": "prisma generate && tsc",
-  "start": "node dist/index.js",
-  "dev": "nodemon --exec ts-node src/index.ts"
+    "build": "prisma generate && tsc",
+    "start": "node dist/index.js",
+    "dev": "nodemon --exec ts-node src/index.ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

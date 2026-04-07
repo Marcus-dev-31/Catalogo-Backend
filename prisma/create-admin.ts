@@ -7,18 +7,22 @@ const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-    const hashedPassword = await bcrypt.hash('tu-password-segura', 10)
+  const email = process.env.ADMIN_EMAIL
+  const password = process.env.ADMIN_PASSWORD
 
-    await prisma.user.create({
-        data: {
-            email: 'admin@multitienda.com',
-            password: hashedPassword
-        }
-    })
+  if (!email || !password) {
+    throw new Error('Faltan ADMIN_EMAIL o ADMIN_PASSWORD en el .env')
+  }
 
-    console.log('Admin Creado')
+  const hashedPassword = await bcrypt.hash(password, 10)
+
+  await prisma.user.create({
+    data: { email, password: hashedPassword }
+  })
+
+  console.log(`Admin creado: ${email}`)
 }
 
 main()
-    .catch(console.error)
-    .finally(() => prisma.$disconnect())
+  .catch(console.error)
+  .finally(() => prisma.$disconnect())

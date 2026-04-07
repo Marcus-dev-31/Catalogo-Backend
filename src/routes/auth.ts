@@ -3,10 +3,19 @@ import { Router } from "express";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
 import prisma from "../prisma";
+import rateLimit from 'express-rate-limit';
 
 const router = Router()
 
-router.post('/login', async (req, res) => {
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 5,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: { error: 'Demasiados intentos. Intentá de nuevo en 15 minutos.' },
+})
+
+router.post('/login', loginLimiter, async (req, res) => {
     try {
         const { email, password } = req.body
 
